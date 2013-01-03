@@ -1,0 +1,22 @@
+<div id = "big_page"></div>
+
+<%= subscribe_to "/messages/new" %>
+
+<script type = 'text/json' id = 'json'>
+	{
+		"messages" : <%= Message.all.to_json %>
+	}
+</script>
+
+<%= content_for :javascript do -%>
+	<script type = 'text/javascript'>
+		$(function() {
+			var div, data;
+			div = $('<div></div>');
+			div.html($('#json').text());
+			data = JSON.parse(div.text());
+		
+			Chatter.initialize(data);
+		});
+	</script>
+<% end %>
